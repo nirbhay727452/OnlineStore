@@ -1,10 +1,14 @@
 package com.onlinestore.onlinestore.Controller;
 
 import com.onlinestore.onlinestore.DTO.FakeStoreProductDTO;
+import com.onlinestore.onlinestore.DTO.GenericProductDTO;
+import com.onlinestore.onlinestore.Services.FakeStoreProductServiceImpl;
 import com.onlinestore.onlinestore.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/Products") // this products endpoint will apply to all methods inside this class
@@ -56,13 +60,13 @@ public class ProductController {
 
 
     @GetMapping("/{id}")
-    public FakeStoreProductDTO getProductById(@PathVariable("id") Long id){ // map url path id to this local variable id
+    public GenericProductDTO getProductById(@PathVariable("id") Long id){ // map url path id to this local variable id
         // Calls ProductService getProductById
         return productService.getProductById(id);
     }
-    @GetMapping("")
-    public String getAllProduct(){
-            return "returning all prodcuts";
+    @GetMapping("/")
+    public List<GenericProductDTO> getAllProduct(){
+            return productService.getAllProduct();
     }
     @DeleteMapping("/{id}")
     public void deleteProductById(@PathVariable("id") Long id ){ // map url path id to this local variable id

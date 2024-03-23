@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FakeStoreProductDTO {
+public class GenericProductDTO {
     private long id;
     private String description;
     private String title;
@@ -13,3 +13,7 @@ public class FakeStoreProductDTO {
     private String category;
     private String image;
 }
+/*
+Implement thus DTO bcz, if FakeStore Website changes/add attributes into API,
+we only have to chnage FakeStoreProductDTO but not our internal code.
+ */
