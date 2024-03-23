@@ -1,5 +1,6 @@
 package com.onlinestore.onlinestore.Controller;
 
+import com.onlinestore.onlinestore.DTO.FakeStoreProductDTO;
 import com.onlinestore.onlinestore.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -55,7 +56,7 @@ public class ProductController {
 
 
     @GetMapping("/{id}")
-    public String getProductById(@PathVariable("id") Long id){ // map url path id to this local variable id
+    public FakeStoreProductDTO getProductById(@PathVariable("id") Long id){ // map url path id to this local variable id
         // Calls ProductService getProductById
         return productService.getProductById(id);
     }

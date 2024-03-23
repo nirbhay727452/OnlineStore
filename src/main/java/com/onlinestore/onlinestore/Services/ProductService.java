@@ -1,9 +1,10 @@
 package com.onlinestore.onlinestore.Services;
 
 
+import com.onlinestore.onlinestore.DTO.FakeStoreProductDTO;
 
 public interface ProductService {
-    String getProductById(Long id);
+    FakeStoreProductDTO getProductById(Long id);
 
     String getAllProduct();
 
