@@ -64,10 +64,18 @@ public class ProductController {
         // Calls ProductService getProductById
         return productService.getProductById(id);
     }
+
+    @PostMapping("/")
+    public GenericProductDTO createProduct( @RequestBody GenericProductDTO genericProductDTO)
+    {
+        return productService.createProduct( genericProductDTO);
+    }
     @GetMapping("/")
     public List<GenericProductDTO> getAllProduct(){
             return productService.getAllProduct();
     }
+
+
     @DeleteMapping("/{id}")
     public void deleteProductById(@PathVariable("id") Long id ){ // map url path id to this local variable id
 
