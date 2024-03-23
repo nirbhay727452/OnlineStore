@@ -1,11 +1,15 @@
 package com.onlinestore.onlinestore.Controller;
 
+import com.onlinestore.onlinestore.DTO.ExceptionDTO;
 import com.onlinestore.onlinestore.DTO.FakeStoreProductDTO;
 import com.onlinestore.onlinestore.DTO.GenericProductDTO;
+import com.onlinestore.onlinestore.Exceptions.ProductNotFoundException;
 import com.onlinestore.onlinestore.Services.FakeStoreProductServiceImpl;
 import com.onlinestore.onlinestore.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,7 +64,7 @@ public class ProductController {
 
 
     @GetMapping("/{id}")
-    public GenericProductDTO getProductById(@PathVariable("id") Long id){ // map url path id to this local variable id
+    public GenericProductDTO getProductById(@PathVariable("id") Long id) throws ProductNotFoundException { // map url path id to this local variable id
         // Calls ProductService getProductById
         return productService.getProductById(id);
     }
@@ -81,9 +85,11 @@ public class ProductController {
         return productService.deleteProductById(id);
     }
 
-    public void updateProductById(){
-
+    @PatchMapping("/{id}")
+    public GenericProductDTO updateProductById(@PathVariable("id") long id, @RequestBody GenericProductDTO genericProductDTO){
+        return productService.updateProductById(id, genericProductDTO);
     }
+
 }
 /*
 3 ways of Dependency Injection
