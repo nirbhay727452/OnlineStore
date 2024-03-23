@@ -3,8 +3,11 @@ package com.onlinestore.onlinestore.Services;
 import com.onlinestore.onlinestore.DTO.FakeStoreProductDTO;
 import com.onlinestore.onlinestore.DTO.GenericProductDTO;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RequestCallback;
+import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -61,11 +64,20 @@ public class  FakeStoreProductServiceImpl implements ProductService{
         ResponseEntity<FakeStoreProductDTO> responseEntity = 
                 restTemplate.postForEntity(genericProductURL, genericProductDTO , FakeStoreProductDTO.class);
 
-        return convertToGenericProductDTO(responseEntity.getBody()); 
+        return convertToGenericProductDTO(responseEntity.getBody());
     }
     @Override
-    public void deleteProductById(Long id) {
+    public GenericProductDTO deleteProductById(Long id) {
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        // this call will not return anything so implementing manual call
+        //restTemplate.delete(singleProductURL,id);
 
+        //copied below code from getForEntity() and modified objects
+        RequestCallback requestCallback =restTemplate.acceptHeaderRequestCallback(FakeStoreProductDTO.class);
+        ResponseExtractor<ResponseEntity<FakeStoreProductDTO>> responseExtractor = restTemplate.responseEntityExtractor(FakeStoreProductDTO.class);
+        ResponseEntity<FakeStoreProductDTO> responseEntity = restTemplate.execute(singleProductURL, HttpMethod.DELETE, requestCallback, responseExtractor, id);
+
+        return convertToGenericProductDTO(responseEntity.getBody());
     }
 
     @Override

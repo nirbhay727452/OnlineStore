@@ -11,7 +11,7 @@ public interface ProductService {
 
     List<GenericProductDTO> getAllProduct();
 
-    void deleteProductById( Long id );
+    GenericProductDTO deleteProductById( Long id );
 
     void updateProductById(Long id);
 

@@ -77,8 +77,8 @@ public class ProductController {
 
 
     @DeleteMapping("/{id}")
-    public void deleteProductById(@PathVariable("id") Long id ){ // map url path id to this local variable id
-
+    public GenericProductDTO deleteProductById(@PathVariable("id") Long id ){ // map url path id to this local variable id
+        return productService.deleteProductById(id);
     }
 
     public void updateProductById(){
