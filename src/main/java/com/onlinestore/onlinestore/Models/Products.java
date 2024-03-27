@@ -1,7 +1,6 @@
 package com.onlinestore.onlinestore.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,5 +13,6 @@ public class Products extends BaseModel{
     private String price;
     private String image;
     @ManyToOne
+    @JoinColumn(name = "Category_id")
     private Category category;
 }
