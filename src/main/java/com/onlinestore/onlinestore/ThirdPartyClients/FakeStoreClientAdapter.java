@@ -22,8 +22,8 @@ public class FakeStoreClientAdapter {
     FakeStoreClientAdapter( RestTemplateBuilder restTemplateBuilder){
         this.restTemplateBuilder = restTemplateBuilder;
     }
-    private String singleProductURL = "https://fakestoreapi.com/products/{id}";
-    private String genericProductURL = "https://fakestoreapi.com/products/";
+    private String singleProductURL = "http://fakestoreapi.com/products/{id}"; // can usee https, but getting ssl certificate issue from this laptop
+    private String genericProductURL = "http://fakestoreapi.com/products/";
 
     public FakeStoreProductDTO getProductById(Long id) throws ProductNotFoundException {
         RestTemplate restTemplate = restTemplateBuilder.build();
