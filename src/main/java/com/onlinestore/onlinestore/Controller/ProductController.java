@@ -63,7 +63,7 @@ public class ProductController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") //get product by id
     public GenericProductDTO getProductById(@PathVariable("id") Long id) throws ProductNotFoundException { // map url path id to this local variable id
         // Calls ProductService getProductById
         return productService.getProductById(id);
