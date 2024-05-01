@@ -1,5 +1,7 @@
 package com.onlinestore.onlinestore.Services;
 
+import Security.JwtObject;
+import Security.TokenValidator;
 import com.onlinestore.onlinestore.DTO.FakeStoreProductDTO;
 import com.onlinestore.onlinestore.DTO.GenericProductDTO;
 import com.onlinestore.onlinestore.Exceptions.ProductNotFoundException;
@@ -13,16 +15,18 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //@Service // this is create object while initialization. these are called as beans. we can name these beans eg: @Service("FakeStoreBeans")
 @Service("FakeStoreProductServiceImpl")
 public class  FakeStoreProductServiceImpl implements ProductService{
 
     private FakeStoreClientAdapter fakeStoreClientAdapter;
+    private TokenValidator tokenValidator;
 
-
-    FakeStoreProductServiceImpl( FakeStoreClientAdapter fakeStoreClientAdapter){
+    FakeStoreProductServiceImpl(FakeStoreClientAdapter fakeStoreClientAdapter, TokenValidator tokenValidator){
         this.fakeStoreClientAdapter = fakeStoreClientAdapter;
+        this.tokenValidator = tokenValidator;
     }
     private String singleProductURL = "https://fakestoreapi.com/products/{id}";
     private String genericProductURL = "https://fakestoreapi.com/products/";
@@ -38,8 +42,23 @@ public class  FakeStoreProductServiceImpl implements ProductService{
         return genericProductDTO;
     }
     @Override
-    public GenericProductDTO getProductById(Long id) throws ProductNotFoundException {
+    public GenericProductDTO getProductById(String authToken, Long id) throws ProductNotFoundException {
         GenericProductDTO genericProductDTO = convertToGenericProductDTO(fakeStoreClientAdapter.getProductById(id));
+        System.out.println(authToken);
+        Optional<JwtObject> jwtOptional = tokenValidator.validateToken(authToken);
+        if(jwtOptional.isEmpty()){
+            //invalid request, reject request
+            return null;
+        }
+        else{
+            JwtObject jwtObject = jwtOptional.get();
+            long userId = jwtObject.getUserID();
+            // we can validate any condition
+            //i.e if this particular user is allowed to make this particular API call or not
+            if(userId == 10) // user10 is not allowed to make this call
+                return null;
+
+        }
         return genericProductDTO;
     }
 

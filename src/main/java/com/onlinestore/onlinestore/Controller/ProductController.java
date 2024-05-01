@@ -8,6 +8,7 @@ import com.onlinestore.onlinestore.Services.FakeStoreProductServiceImpl;
 import com.onlinestore.onlinestore.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -64,9 +65,9 @@ public class ProductController {
 
 
     @GetMapping("/{id}") //get product by id
-    public GenericProductDTO getProductById(@PathVariable("id") Long id) throws ProductNotFoundException { // map url path id to this local variable id
+    public GenericProductDTO getProductById(@RequestHeader(HttpHeaders.AUTHORIZATION)String authToken , @PathVariable("id") Long id) throws ProductNotFoundException { // map url path id to this local variable id
         // Calls ProductService getProductById
-        return productService.getProductById(id);
+        return productService.getProductById(authToken , id);
     }
 
     @PostMapping("/")
