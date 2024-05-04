@@ -1,4 +1,4 @@
-package Security;
+package com.onlinestore.onlinestore.Security;
 
 import com.onlinestore.onlinestore.Models.BaseModel;
 import jakarta.persistence.Entity;

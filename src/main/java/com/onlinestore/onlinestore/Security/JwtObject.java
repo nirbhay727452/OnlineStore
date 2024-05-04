@@ -1,4 +1,4 @@
-package Security;
+package com.onlinestore.onlinestore.Security;
 
 import lombok.Getter;
 import lombok.Setter;

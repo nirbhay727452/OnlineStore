@@ -56,7 +56,7 @@ public class ProductController {
 */
 
     //Constructor Injection v2 , can be done automatically by using @Autowired on productService declaration == Field Injection
-    private ProductService productService;
+    private final ProductService productService;
     //@Autowired // optional in latest version
     ProductController(@Qualifier("FakeStoreProductServiceImpl") ProductService productService) // using qualify to select particular beans if multiple beans available (multple implentation of ProductService Intetrface)
     {

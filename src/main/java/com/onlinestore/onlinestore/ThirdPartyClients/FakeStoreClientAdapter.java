@@ -3,6 +3,7 @@ package com.onlinestore.onlinestore.ThirdPartyClients;
 import com.onlinestore.onlinestore.DTO.FakeStoreProductDTO;
 import com.onlinestore.onlinestore.DTO.GenericProductDTO;
 import com.onlinestore.onlinestore.Exceptions.ProductNotFoundException;
+import com.onlinestore.onlinestore.Security.TokenValidator;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +17,21 @@ import java.util.List;
 
 @Component
 public class FakeStoreClientAdapter {
-    private RestTemplateBuilder restTemplateBuilder;
+    private final RestTemplateBuilder restTemplateBuilder;
+    private TokenValidator tokenValidator;
 
-
-    FakeStoreClientAdapter( RestTemplateBuilder restTemplateBuilder){
+    FakeStoreClientAdapter( RestTemplateBuilder restTemplateBuilder , TokenValidator tokenValidator ){
         this.restTemplateBuilder = restTemplateBuilder;
+        this.tokenValidator = tokenValidator;
     }
-    private String singleProductURL = "http://fakestoreapi.com/products/{id}"; // can usee https, but getting ssl certificate issue from this laptop
-    private String genericProductURL = "http://fakestoreapi.com/products/";
+
+//    @Autowired
+//    public FakeStoreClientAdapter( TokenValidator tokenValidator){
+//        this.tokenValidator = tokenValidator;
+//
+//    }
+    private final String singleProductURL = "http://fakestoreapi.com/products/{id}"; // can usee https, but getting ssl certificate issue from this laptop
+    private final String genericProductURL = "http://fakestoreapi.com/products/";
 
     public FakeStoreProductDTO getProductById(Long id) throws ProductNotFoundException {
         RestTemplate restTemplate = restTemplateBuilder.build();
